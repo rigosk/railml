@@ -135,7 +135,7 @@ if not file_path:
 st.success('Thank you for inputting a name.')
 if file_path is not None:
 # read in a document
-    times=pd.DataFrame(get_ocpTT2(file_path))
+    #times=pd.DataFrame(get_ocpTT2(file_path))
     station_names=get_ocps(file_path)
-    merge1=pd.merge(times.reset_index(), station_names,on='ocp-id', how='left').set_index('index').sort_index()
-    st.dataframe(merge1)
+    #merge1=pd.merge(times.reset_index(), station_names,on='ocp-id', how='left').set_index('index').sort_index()
+    st.dataframe(station_names)
