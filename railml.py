@@ -112,7 +112,7 @@ def get_ocps(file_path):
 
 
 
-print(merge1.head())
+
 
 
 st.title('Reading railML files')
