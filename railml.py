@@ -30,7 +30,7 @@ ns='{http://www.railml.org/schemas/2013}'
 
 def get_ocpTT2(file_path):
     ocpTTs = []
-    for _, elem in ET.iterparse(file_path, events=("end"), tag=[ns+'trainParts',ns+'trainPart'], remove_blank_text=True):
+    for _, elem in ET.iterparse(file_path, events=('end'), tag=[ns+'trainParts',ns+'trainPart'], remove_blank_text=True):
         print('i')
         if elem.tag == ns+'trainParts':
             break
