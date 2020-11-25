@@ -32,7 +32,7 @@ def to_excel(df):
     #worksheet.set_column('A:A', None, format1) # Say Data are in column A
     writer.save()
     processed_data = output.getvalue()
-    return processed_data
+    return df.to_excel(writer, index = False, sheet_name='Sheet1')#processed_data
 
 def get_table_download_link(df):
     """Generates a link allowing the data in a given panda dataframe to be downloaded
