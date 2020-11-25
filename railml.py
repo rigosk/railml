@@ -71,7 +71,7 @@ def get_ocpTT2(file_path):
                            ocpTT_dict.get('ocpType'),    #18
                            times_dict.get('departure'),    #19
                            times_dict.get('arrival'),    #20
-                           operatingPeriod.get('ref')                 #21
+                         #  operatingPeriod.get('ref')                 #21
                           ])
         elem.clear()
     #elem.clear()
@@ -96,7 +96,7 @@ def get_ocpTT2(file_path):
                                         'ocpType',#18
                                         'departure_time',#19
                                         'arrival_time',   #20
-                                        'operatingPeriod' #21
+                                    #    'operatingPeriod' #21
                                        ]).fillna('')
 
 
