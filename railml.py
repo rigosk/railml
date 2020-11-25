@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 #import sys
-import lxml.etree as ET
+from lxml import etree as ET
 import gc
 
 st.set_page_config(
