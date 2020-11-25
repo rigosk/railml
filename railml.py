@@ -42,7 +42,8 @@ In the meantime, below is an example of what you can do with just a few lines of
 def get_data():
     url = "http://data.insideairbnb.com/united-states/ny/new-york-city/2019-09-12/visualisations/listings.csv"
     return pd.read_csv(url)
-df = get_data()parser = etree.XMLParser(remove_blank_text=True)
+df = get_data()
+parser = etree.XMLParser(remove_blank_text=True)
 #parser = etree.HTMLParser(recover=False)
 def get_trains():
     trains_list=[]
