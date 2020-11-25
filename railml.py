@@ -125,12 +125,12 @@ st.sidebar.markdown("""
 
 
 
-uploaded_file = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
-if not uploaded_file:
+file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
+if not file_path:
     st.warning('Please upload a railml file.')
     st.stop()
 st.success('Thank you for inputting a name.')
-if uploaded_file is not None:
+if file_path is not None:
 # read in a document
     times=pd.DataFrame(get_ocpTT2(file_path))
     station_names=get_ocps(file_path)
