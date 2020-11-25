@@ -24,7 +24,7 @@ footer {visibility: hidden;}
 
 def to_excel(df):
     output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    writer = pd.ExcelWriter(output)
     df.to_excel(writer, index = False, sheet_name='Sheet1')
     workbook  = writer.book
     worksheet = writer.sheets['Sheet1']
