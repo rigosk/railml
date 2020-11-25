@@ -41,7 +41,7 @@ def get_table_download_link(df):
     b64 = base64.b64encode(val)  # val looks like b'...'
     return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="Your_File.xlsx">Download Excel file</a>' # decode b'abc' => abc
 
-st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+
 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 ns='{http://www.railml.org/schemas/2013}'
@@ -86,6 +86,7 @@ if uploaded_file is not None:
     uploaded_file.seek(0)
     gc.collect()
     c2.write(df)
+    st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
 
     c2.markdown(get_table_download_link(df), unsafe_allow_html=True)
