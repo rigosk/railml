@@ -3,6 +3,8 @@ import lxml.etree as ET
 import pandas as pd
 import gc
 import base64
+from io import BytesIO
+
 
 
 st.set_page_config(
