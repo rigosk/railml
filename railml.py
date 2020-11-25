@@ -42,17 +42,6 @@ def get_table_download_link(df):
     val = to_excel(df)
     b64 = base64.b64encode(val)  # val looks like b'...'
     return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="Your_File.xlsx">Download Excel file</a>' # decode b'abc' => abc
-def get_table_download_link3(df):
-    """Generates a link allowing the data in a given panda dataframe to be downloaded
-    in:  dataframe
-    out: href string
-    """
-    output = BytesIO()
-    writer = pd.ExcelWriter(output)
-    val = df.to_excel(writer,index=False)
-    b64 = base64.b64encode(val)  # val looks like b'...'
-    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="Your_File3.xlsx">Download Excel file</a>' # decode b'abc' => abc
-
 
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 ns='{http://www.railml.org/schemas/2013}'
@@ -98,7 +87,6 @@ if uploaded_file is not None:
     gc.collect()
     c2.write(df)
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
-    st.markdown(get_table_download_link3(df), unsafe_allow_html=True)
 
 
     c2.markdown(get_table_download_link2(df), unsafe_allow_html=True)
