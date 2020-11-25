@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-from lxml import etree
+import sys
+import lxml.etree as ET
+import gc
 
 st.set_page_config(
     layout='wide',
@@ -25,46 +26,104 @@ st.markdown(hide_streamlit_style,unsafe_allow_html=True)
 st.sidebar.markdown('<p id="my-footer">Developed by <a  href="https://www.linkedin.com/in/konstantinosrigos/" target="_blank">Konstantinos Rigos</a></p>',unsafe_allow_html=True)
 namespaces={'ns':'http://www.railml.org/schemas/2013'}
 
+def get_ocpTT2(file_path):
+    ocpTTs = []
+    for _, elem in ET.iterparse(file_path, events=("end",), tag=[ns+'trainParts',ns+'trainPart'], remove_blank_text=True):
+        if elem.tag == ns+'trainParts':
+            break
+        operatingPeriod=elem.find('ns:operatingPeriodRef',namespaces=namespaces)
 
-"""
-# Welcome to Streamlit!
+        for ocpTT in elem.findall('ns:ocpsTT/ns:ocpTT',namespaces=namespaces):
+            ocpTT_dict=ocpTT.attrib
+            times_dict=ocpTT.find('ns:times',namespaces=namespaces).attrib
+            #print(times_dict)
 
-Edit `/streamlit_app.py` to customize this app to your heart's :clock: desire :heart:
+        #ocpTTs=elem.find('ns:ocpsTT',namespaces=namespaces)
+        #times=ocpTTs.find('ns:times',namespaces=namespaces)
+        #trainPart=elem.xpath('parent::*/parent::node()',namespaces=namespaces)
 
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+        #print(len(operatingPeriod),operatingPeriod[0].get('ref'))
+        #print(trainPart[0].get('id'))
+        #print(dep_time.get('departure'))
+        #ocp_code=elem.get('ocpRef')
 
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
 
- 
 
-@st.cache
-def get_data():
-    url = "http://data.insideairbnb.com/united-states/ny/new-york-city/2019-09-12/visualisations/listings.csv"
-    return pd.read_csv(url)
-df = get_data()
-parser = etree.XMLParser(remove_blank_text=True)
-#parser = etree.HTMLParser(recover=False)
-def get_trains():
-    trains_list=[]
-    trains=railml.xpath('//ns:train',namespaces=namespaces)
-    for i in range(len(trains)):
-        dep_station=railml.xpath('//ns:train[@id="'+trains[i].get('id')+'"]/ns:trainPartSequence[@sequence="1"]/ns:trainPartRef',namespaces=namespaces)
-        arr_station=railml.xpath('//ns:train[@id="'+trains[i].get('id')+'"]/ns:trainPartSequence[last()]/ns:trainPartRef',namespaces=namespaces)
-        arr_station_name=railml.xpath('//ns:ocpTT[id="'+arr_station[0].get('ref')+'"]',namespaces=namespaces)
-        trains_list.append([trains[i].get('trainNumber'),dep_station[0].get('ref'),arr_station_name[0].get('description')])
-    return trains_list
+            ocpTTs.append([elem.get('id'), #required !    #1
+                           elem.get('code'),#optional       #2
+                           elem.get('name'), #optional    #3
+                           elem.get('description'), #optional    #4
+                           #elem.get('xml:lang'),#optional    #5
+                           elem.get('line'),#optional    #6
+                           elem.get('trainLine'),#optional    #7
+                           elem.get('trainNumber'),#optional    #8
+                          # elem.get('additionalTrainNumber'),#optional    #9
+                           elem.get('debitcode'),#optional    #10
+                           elem.get('remarks'),#optional    #11
+                           elem.get('timetablePeriodRef'),#optional    #12
+                           elem.get('categoryRef'),#optional    #13
+                           elem.get('operator'),#optional    #14
+                           elem.get('cancellation'),#optional    #15
+                           ocpTT_dict.get('sequence'),    #16
+                           ocpTT_dict.get('ocpRef'),    #17
+                           ocpTT_dict.get('ocpType'),    #18
+                           times_dict.get('departure'),    #19
+                           times_dict.get('arrival'),    #20
+                           operatingPeriod.get('ref')                 #21
+                          ])
+        elem.clear()
+    #elem.clear()
+    del elem
+    return pd.DataFrame(ocpTTs,columns=['trainPart-id', #1
+                                        'trainPart-code',#2
+                                        'trainPart-name',#3
+                                        'trainPart-description',#4
+                                       # 'trainPart-xml:lang',#5
+                                        'trainPart-line',#6
+                                        'trainPart-trainLine',#7
+                                        'trainPart-trainNumber',#8
+                                       # 'trainPart-additionalTrainNumber',#9
+                                        'trainPart-debitcode',#10
+                                        'trainPart-remarks',#11
+                                        'trainPart-timetablePeriodRef',#12
+                                        'trainPart-categoryRef', #13
+                                        'trainPart-operator',#14
+                                        'trainPart-cancellation',#15
+                                        'sequence',#16
+                                        'ocp-id',#17
+                                        'ocpType',#18
+                                        'departure_time',#19
+                                        'arrival_time',   #20
+                                        'operatingPeriod' #21
+                                       ]).fillna('')
+
+
+#this is to get the station names
+def get_ocps(file_path):
+    ocps=[]
+    for _, elem in ET.iterparse(file_path, events=("end",), tag=[ns+'ocp',ns+'operationControlPoints'], remove_blank_text=True):
+        if elem.tag == ns+'operationControlPoints':
+            break
+        ocps.append([elem.get('id'),elem.get('name')])
+        elem.clear()
+    #elem.clear()
+    del elem
+    return pd.DataFrame(ocps,columns=['ocp-id','station-name'])
+
+
+
+print(merge1.head())
+
 
 st.title('Reading railML files')
 
 st.sidebar.header('User Input Features')
 
 st.sidebar.markdown("""
-[Example CSV input file](https://raw.githubusercontent.com/dataprofessor/data/master/penguins_example.csv)
+[Example .railml input file](https://raw.githubusercontent.com/dataprofessor/data/master/penguins_example.csv)
 """)
 
-name = st.text_input('Name')
+
 
 uploaded_file = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
 if not uploaded_file:
@@ -73,95 +132,7 @@ if not uploaded_file:
 st.success('Thank you for inputting a name.')
 if uploaded_file is not None:
 # read in a document
-    #dom1 = minidom.parse(uploaded_file)
-    root=etree.parse(uploaded_file,parser)
-    #ocps = dom1.getElementsByTagName('ocp')
-    railml=(root.getroot())
-
-    #option = st.selectbox(
-     #'What train you need information?',
-     #(get_trains()))
-
-    #st.write('You selected:', option)
-    
-############################################################
-#print stations
-    
-
-    ocps = railml.xpath('//ns:ocp',namespaces=namespaces)
-    #print(r)
-    myDict={}
-    for node in range(len(ocps)):
-    #print(node)
-    #print(r[node].get('id'))
-        myDict[ocps[node].get('id')]=ocps[node].get('name')
-        st.text(ocps[node].get('id'))
-        st.text(ocps[node].attrib)
-    st.text(myDict)
-
-    ##################################################################
-
-
-#print train parts
-    my_bar = st.progress(0)
-
-
-
-    train_parts=railml.xpath('//ns:trainPart',namespaces=namespaces)
-    dict_list=[]
-    for i in range(len(train_parts)):
-        temp_dict=dict(train_parts[i].attrib)
-        
-        my_bar.progress((i+1)/len(train_parts))
-
-
-        departure=railml.xpath('//ns:trainPart[@id="'+temp_dict['id']+'"]/ns:ocpsTT/ns:ocpTT[1]',namespaces=namespaces)
-        arrival=railml.xpath('//ns:trainPart[@id="'+temp_dict['id']+'"]/ns:ocpsTT/ns:ocpTT[last()]',namespaces=namespaces)
-        #st.write(myDict[departure[0].get('ocpRef')])
-        temp_dict['departure']=myDict[departure[0].get('ocpRef')]
-        temp_dict['arrival']=myDict[arrival[0].get('ocpRef')]
-        
-        dict_list.append(temp_dict)
-
-    train_parts_list=pd.DataFrame.from_records(dict_list).fillna(0)
-    st.dataframe(train_parts_list)
-##############################################################
-st.title("Streamlit 101: An in-depth introduction")
-st.markdown("Welcome to this in-depth introduction to [...].")
-st.header("Customary quote")
-st.markdown("> I just love to go home, no matter where I am [...]")
-
-st.dataframe(df.head())
-
-
-cols = ["name", "host_name", "neighbourhood", "room_type", "price"]
-st_ms = st.multiselect("Columns", df.columns.tolist(), default=cols)
-st.write(st_ms)
-st.dataframe(df[st_ms].head())
-
-
-st.table(df.groupby("room_type").price.mean().reset_index()\
-.round(2).sort_values("price", ascending=False)\
-.assign(avg_price=lambda x: x.pop("price").apply(lambda y: "%.2f" % y)))
-
-
-with st.echo(code_location='below'):
-    total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
-    num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
-
-    Point = namedtuple('Point', 'x y')
-    data = []
-
-    points_per_turn = total_points / num_turns
-
-    for curr_point_num in range(total_points):
-        curr_turn, i = divmod(curr_point_num, points_per_turn)
-        angle = (curr_turn + 1) * 2 * math.pi * i / points_per_turn
-        radius = curr_point_num / total_points
-        x = radius * math.cos(angle)
-        y = radius * math.sin(angle)
-        data.append(Point(x, y))
-
-    st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
-        .mark_circle(color='#0068c9', opacity=0.5)
-        .encode(x='x:Q', y='y:Q'))
+    times=pd.DataFrame(get_ocpTT2(file_path))
+    station_names=get_ocps(file_path)
+    merge1=pd.merge(times.reset_index(), station_names,on='ocp-id', how='left').set_index('index').sort_index()
+    st.dataframe(merge1)
