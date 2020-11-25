@@ -48,7 +48,7 @@ ns='{http://www.railml.org/schemas/2013}'
 namespaces={'ns':'http://www.railml.org/schemas/2013'}
 
 
-def get_table_download_link(df):
+def get_table_download_link2(df):
     """Generates a link allowing the data in a given panda dataframe to be downloaded
     in:  dataframe
     out: href string
@@ -89,7 +89,7 @@ if uploaded_file is not None:
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
 
-    c2.markdown(get_table_download_link(df), unsafe_allow_html=True)
+    c2.markdown(get_table_download_link2(df), unsafe_allow_html=True)
 placeholder = c1.empty()
 if not st.checkbox("Hide dataframe"):
     df2 = pd.DataFrame([0,1,2,3])
