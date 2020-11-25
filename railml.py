@@ -30,8 +30,7 @@ ns='{http://www.railml.org/schemas/2013}'
 
 def get_ocpTT2(file_path):
     ocpTTs = []
-    for _, elem in ET.iterparse(file_path, events=('end'), tag=[ns+'trainParts',ns+'trainPart'], remove_blank_text=True):
-        print('i')
+    for _, elem in ET.iterparse(file_path, events=['end'], tag=[ns+'trainParts',ns+'trainPart'], remove_blank_text=True):
         if elem.tag == ns+'trainParts':
             break
         operatingPeriod=elem.find('ns:operatingPeriodRef',namespaces=namespaces)
@@ -105,7 +104,6 @@ def get_ocpTT2(file_path):
 def get_ocps(file_path):
     ocps=[]
     for _, elem in ET.iterparse(file_path, events=["end"], tag=[ns+'ocp',ns+'operationControlPoints'], remove_blank_text=True):
-        st.write(elem)
         if elem.tag == ns+'operationControlPoints':
             break
         ocps.append([elem.get('id'),elem.get('name')])
@@ -136,7 +134,7 @@ if not file_path:
 st.success('Thank you for inputting a name.')
 if file_path is not None:
 # read in a document
-    #times=pd.DataFrame(get_ocpTT2(file_path))
+    times=pd.DataFrame(get_ocpTT2(file_path))
     station_names=get_ocps(file_path)
-    #merge1=pd.merge(times.reset_index(), station_names,on='ocp-id', how='left').set_index('index').sort_index()
-    st.dataframe(station_names)
+    merge1=pd.merge(times.reset_index(), station_names,on='ocp-id', how='left').set_index('index').sort_index()
+    st.dataframe(merge1)
