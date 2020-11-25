@@ -103,7 +103,7 @@ def get_ocpTT2(file_path):
 #this is to get the station names
 def get_ocps(file_path):
     ocps=[]
-    for _, elem in ET.iterparse(file_path, events=("end",), tag=[ns+'ocp',ns+'operationControlPoints'], remove_blank_text=True):
+    for _, elem in ET.iterparse(file_path, events=("end"), tag=[ns+'ocp',ns+'operationControlPoints'], remove_blank_text=True):
         if elem.tag == ns+'operationControlPoints':
             break
         ocps.append([elem.get('id'),elem.get('name')])
