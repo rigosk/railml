@@ -40,7 +40,7 @@ forums](https://discuss.streamlit.io).
 In the meantime, below is an example of what you can do with just a few lines of code:
 """
 
-
+ 
 
 @st.cache
 def get_data():
