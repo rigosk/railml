@@ -23,6 +23,7 @@ footer {visibility:hidden;}
 
 st.markdown(hide_streamlit_style,unsafe_allow_html=True)
 st.sidebar.markdown('<p id="my-footer">Developed by <a  href="https://www.linkedin.com/in/konstantinosrigos/" target="_blank">Konstantinos Rigos</a></p>',unsafe_allow_html=True)
+namespaces={'ns':'http://www.railml.org/schemas/2013'}
 
 
 """
