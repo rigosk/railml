@@ -1,8 +1,8 @@
-from collections import namedtuple
-import altair as alt
-import math
-import pandas as pd
 import streamlit as st
+import pandas as pd
+import numpy as np
+from lxml import etree
+
 st.set_page_config(
     layout='wide',
     initial_sidebar_state='expanded',
@@ -23,11 +23,7 @@ footer {visibility:hidden;}
 
 st.markdown(hide_streamlit_style,unsafe_allow_html=True)
 st.sidebar.markdown('<p id="my-footer">Developed by <a  href="https://www.linkedin.com/in/konstantinosrigos/" target="_blank">Konstantinos Rigos</a></p>',unsafe_allow_html=True)
-import plotly_express as px
-from plotly.offline import plot
-iris = px.data.iris()
-scatter_plot = px.scatter(iris, x="sepal_width", y="sepal_length")
-st.write(scatter_plot)
+
 
 """
 # Welcome to Streamlit!
@@ -46,8 +42,88 @@ In the meantime, below is an example of what you can do with just a few lines of
 def get_data():
     url = "http://data.insideairbnb.com/united-states/ny/new-york-city/2019-09-12/visualisations/listings.csv"
     return pd.read_csv(url)
-df = get_data()
+df = get_data()parser = etree.XMLParser(remove_blank_text=True)
+#parser = etree.HTMLParser(recover=False)
+def get_trains():
+    trains_list=[]
+    trains=railml.xpath('//ns:train',namespaces=namespaces)
+    for i in range(len(trains)):
+        dep_station=railml.xpath('//ns:train[@id="'+trains[i].get('id')+'"]/ns:trainPartSequence[@sequence="1"]/ns:trainPartRef',namespaces=namespaces)
+        arr_station=railml.xpath('//ns:train[@id="'+trains[i].get('id')+'"]/ns:trainPartSequence[last()]/ns:trainPartRef',namespaces=namespaces)
+        arr_station_name=railml.xpath('//ns:ocpTT[id="'+arr_station[0].get('ref')+'"]',namespaces=namespaces)
+        trains_list.append([trains[i].get('trainNumber'),dep_station[0].get('ref'),arr_station_name[0].get('description')])
+    return trains_list
 
+st.title('Reading railML files')
+
+st.sidebar.header('User Input Features')
+
+st.sidebar.markdown("""
+[Example CSV input file](https://raw.githubusercontent.com/dataprofessor/data/master/penguins_example.csv)
+""")
+
+name = st.text_input('Name')
+
+uploaded_file = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
+if not uploaded_file:
+    st.warning('Please upload a railml file.')
+    st.stop()
+st.success('Thank you for inputting a name.')
+if uploaded_file is not None:
+# read in a document
+    #dom1 = minidom.parse(uploaded_file)
+    root=etree.parse(uploaded_file,parser)
+    #ocps = dom1.getElementsByTagName('ocp')
+    railml=(root.getroot())
+
+    #option = st.selectbox(
+     #'What train you need information?',
+     #(get_trains()))
+
+    #st.write('You selected:', option)
+    
+############################################################
+#print stations
+    
+
+    ocps = railml.xpath('//ns:ocp',namespaces=namespaces)
+    #print(r)
+    myDict={}
+    for node in range(len(ocps)):
+    #print(node)
+    #print(r[node].get('id'))
+        myDict[ocps[node].get('id')]=ocps[node].get('name')
+        st.text(ocps[node].get('id'))
+        st.text(ocps[node].attrib)
+    st.text(myDict)
+
+    ##################################################################
+
+
+#print train parts
+    my_bar = st.progress(0)
+
+
+
+    train_parts=railml.xpath('//ns:trainPart',namespaces=namespaces)
+    dict_list=[]
+    for i in range(len(train_parts)):
+        temp_dict=dict(train_parts[i].attrib)
+        
+        my_bar.progress((i+1)/len(train_parts))
+
+
+        departure=railml.xpath('//ns:trainPart[@id="'+temp_dict['id']+'"]/ns:ocpsTT/ns:ocpTT[1]',namespaces=namespaces)
+        arrival=railml.xpath('//ns:trainPart[@id="'+temp_dict['id']+'"]/ns:ocpsTT/ns:ocpTT[last()]',namespaces=namespaces)
+        #st.write(myDict[departure[0].get('ocpRef')])
+        temp_dict['departure']=myDict[departure[0].get('ocpRef')]
+        temp_dict['arrival']=myDict[arrival[0].get('ocpRef')]
+        
+        dict_list.append(temp_dict)
+
+    train_parts_list=pd.DataFrame.from_records(dict_list).fillna(0)
+    st.dataframe(train_parts_list)
+##############################################################
 st.title("Streamlit 101: An in-depth introduction")
 st.markdown("Welcome to this in-depth introduction to [...].")
 st.header("Customary quote")
