@@ -47,7 +47,9 @@ def get_table_download_link3(df):
     in:  dataframe
     out: href string
     """
-    val = df.to_excel(index=False)
+    output = BytesIO()
+    writer = pd.ExcelWriter(output)
+    val = df.to_excel(writer,index=False)
     b64 = base64.b64encode(val)  # val looks like b'...'
     return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="Your_File3.xlsx">Download Excel file</a>' # decode b'abc' => abc
 
