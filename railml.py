@@ -369,6 +369,11 @@ if file_path is not None:
 
     st.write(type(file_path))
 
+
+    root = etree.Element("railml")
+    st.write(root.findall("item"))
+    st.write( list(root[3]))
+
 #    st.write(gc.get_stats())
 #    st.write(gc.get_objects())
     df=get_trainParts(file_path)
