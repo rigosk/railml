@@ -376,13 +376,6 @@ if file_path is not None:
     c2.markdown(get_table_download_link_to_csv(ocpTT_df), unsafe_allow_html=True)
 
 
-placeholder = c1.empty()
-if not st.checkbox("Hide dataframe"):
-    df2 = pd.DataFrame([0,1,2,3])
-    placeholder.dataframe(df2)
-else:
-    placeholder.empty()
-
 
 
 if not file_path:
