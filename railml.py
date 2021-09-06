@@ -338,70 +338,19 @@ c1, c2 = st.beta_columns((1, 4))
 if file_path is not None:
 
     st.write(type(file_path))
-    for _ in range(1):
-        '''
-        file_path.seek(0)
-        times=get_ocpTT(file_path)
-        file_path.seek(0)
-        station_names=get_ocps(file_path)
-        st.write(sys.getsizeof(station_names))
-        file_path.seek(0)
-        merge1=pd.merge(times.reset_index(), station_names, on='ocpRef', how='left').set_index('index').sort_index()
-        del times
-        del station_names
-        file_path.seek(0)
-        merge1=pd.merge(merge1,get_operating_periods(file_path),on='operatingPeriod', how='left')
-        file_path.seek(0)
-        st.write(sys.getsizeof(merge1))
-        file_path.seek(0)
-        st.write(sys.getsizeof(get_trains(file_path)))
-        file_path.seek(0)
-        merge1=pd.merge(merge1,get_trains(file_path),on='trainPart-id', how='left')
-        '''
-        sdf=(main(file_path))
-    st.write(sdf.head())
-    st.write(sys.getsizeof(sdf))
-    st.write(sdf)
-    gc.collect()
-    table=sdf.to_numpy()
-    st.write(table.nbytes)
-    st.write(type(table))
-    #st.write(table[:-1])
-    st.write(len(table))
-    #st.stop()
+
     st.write(gc.get_stats())
     st.write(gc.get_objects())
-
-
-
-    '''file_path.seek(0)
-    station_names=get_ocps(file_path)
-    file_path.seek(0)
-    merge1=pd.merge(times.reset_index(), station_names, on='ocpRef', how='left').set_index('index').sort_index()
-    merge1=pd.merge(merge1,get_categories(file_path),on='category-id',how='left')
-    file_path.seek(0)
-    merge1=pd.merge(merge1,get_operating_periods(file_path),on='operatingPeriod', how='left')
-    file_path.seek(0)
-    merge1=pd.merge(merge1,get_trains(file_path),on='trainPart-id', how='left')
-
-
-
-    merge1.dropna(
-        axis=1,
-        how='all',
-        thresh=None,
-        subset=None,
-        inplace=True
-    )
-    file_path.seek(0)
+    df=get_trainParts(uploaded_file)
+    uploaded_file.seek(0)
     gc.collect()
-    c2.write(merge1)
-    c2.markdown(get_table_download_link_to_excel(merge1), unsafe_allow_html=True)
+    c2.write(df)
+    st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
 
+    c2.markdown(get_table_download_link2(df), unsafe_allow_html=True)
 
-    c2.markdown(get_table_download_link_to_csv(merge1), unsafe_allow_html=True)
-    '''
+
 placeholder = c1.empty()
 if not st.checkbox("Hide dataframe"):
     df2 = pd.DataFrame([0,1,2,3])
