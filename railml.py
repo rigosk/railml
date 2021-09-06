@@ -367,7 +367,7 @@ if file_path is not None:
     file_path.seek(0)
     ocpTT_df=get_ocpTT(file_path)
     file_path.seek(0)
-    operatingPeriods_df=get_ocpTT(file_path)
+    operatingPeriods_df=get_operating_periods(file_path)
     file_path.seek(0)
     gc.collect()
 
