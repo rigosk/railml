@@ -341,8 +341,8 @@ if file_path is not None:
 
 #    st.write(gc.get_stats())
 #    st.write(gc.get_objects())
-    df=get_trainParts(uploaded_file)
-    uploaded_file.seek(0)
+    df=get_trainParts(file_path)
+    file_path.seek(0)
     gc.collect()
     c2.write(df)
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
