@@ -339,8 +339,8 @@ link = '[GitHub](http://github.com)'
 
 
 file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
-
-
+if st.sidebar.button('Say hello'):
+    file_path ='Ostsachsen_V220.railml'
 # Space out the maps so the first one is 2x the size of the other three
 
 
