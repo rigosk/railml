@@ -371,7 +371,7 @@ if file_path is not None:
 
 
     root = ET.Element("railml")
-    st.write(len(root[2]))
+    st.write(len(root))
     st.write(root[1])
 
 #    st.write(gc.get_stats())
