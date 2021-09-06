@@ -340,7 +340,12 @@ link = '[GitHub](http://github.com)'
 
 file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
 if st.sidebar.button('Say hello'):
-    file_path ='Ostsachsen_V220.railml'
+    try:
+        with open('Ostsachsen_V220.railml') as input:
+            file_path=input.read()
+        except FileNotFoundError:
+            st.error('File not found.')
+
 # Space out the maps so the first one is 2x the size of the other three
 
 
