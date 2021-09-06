@@ -341,8 +341,10 @@ link = '[GitHub](http://github.com)'
 file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
 if st.sidebar.button('Say hello'):
     try:
-        file_path=BytesIO('Ostsachsen_V220.railml')
-        
+
+        with open('Ostsachsen_V220.railml') as input:
+            file_path2=input.read()
+            file_path=BytesIO(file_path2)
     except FileNotFoundError:
         st.error('File not found.')
 
