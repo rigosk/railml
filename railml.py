@@ -358,13 +358,13 @@ if file_path is not None:
 
     c2.markdown(get_table_download_link_to_csv(df), unsafe_allow_html=True)
 
-    c2.write(ocp_df)
+    st.dataframe(ocp_df)
     st.markdown(get_table_download_link_to_excel(ocp_df), unsafe_allow_html=True)
 
 
     c2.markdown(get_table_download_link_to_csv(ocp_df), unsafe_allow_html=True)
 
-    c2.write(ocpTT_df)
+    st.write(ocpTT_df)
     st.markdown(get_table_download_link_to_excel(ocpTT_df), unsafe_allow_html=True)
 
 
