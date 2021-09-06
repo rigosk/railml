@@ -370,24 +370,27 @@ if file_path is not None:
     gc.collect()
 
     c1.header('c1')
-    c1.subheader('subheader 1')
+    c1.subheader('Train Parts')
     c1.write(df)
     c1.markdown(get_table_download_link_to_excel(df), unsafe_allow_html=True)
     c1.markdown(get_table_download_link_to_csv(df), unsafe_allow_html=True)
-    c1.button('Say hello',on_click=get_table_download_link_to_csv(df))
+
     c2.header('c2')
-    c2.subheader('subheader 2')
+    c2.subheader('Operational Control Points')
     c2.dataframe(ocp_df)
     c2.markdown(get_table_download_link_to_excel(ocp_df), unsafe_allow_html=True)
-
-
     c2.markdown(get_table_download_link_to_csv(ocp_df), unsafe_allow_html=True)
-    c2.subheader('subheader 3')
+
+    c2.subheader('Operational Control Points TT')
     c2.write(ocpTT_df)
     c2.markdown(get_table_download_link_to_excel(ocpTT_df), unsafe_allow_html=True)
-
-
     c2.markdown(get_table_download_link_to_csv(ocpTT_df), unsafe_allow_html=True)
+
+
+    c2.subheader('Operating Periods')
+    c2.write(get_operating_periods)
+    c2.markdown(get_table_download_link_to_excel(get_operating_periods), unsafe_allow_html=True)
+    c2.markdown(get_table_download_link_to_csv(get_operating_periods), unsafe_allow_html=True)
 
 
 
