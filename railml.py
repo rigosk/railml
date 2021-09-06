@@ -195,7 +195,9 @@ def get_ocps(file_path):
         ocps.append([elem.get('id'),
                     elem.get('code'),
                     elem.get('name'),
-                    elem.get('description')])
+                    elem.get('description'),
+                    elem.get('xml:lang')
+                    elem.get('type')])
         elem.clear()
     #elem.clear()
     if elem:
@@ -346,9 +348,13 @@ file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
 st.sidebar.write('or use a railml sample file')
 if st.sidebar.button('Ostsachsen_V220'):
     try:
-
-        with open('Ostsachsen_V220.railml','rb') as input:
-
+        with open('samples/Ostsachsen_V220.railml','rb') as input:
+            file_path=BytesIO(input.read())
+    except FileNotFoundError:
+        st.error('File not found.')
+if st.sidebar.button('railML_SimpleExample_v11_railML3-1_04'):
+    try:
+        with open('samples/railML_SimpleExample_v11_railML3-1_04.railml','rb') as input:
             file_path=BytesIO(input.read())
     except FileNotFoundError:
         st.error('File not found.')
