@@ -355,19 +355,19 @@ if file_path is not None:
     file_path.seek(0)
     gc.collect()
     c2.write(df)
-    st.markdown(get_table_download_link_to_excel(df), unsafe_allow_html=True)
+    c2.markdown(get_table_download_link_to_excel(df), unsafe_allow_html=True)
 
 
     c2.markdown(get_table_download_link_to_csv(df), unsafe_allow_html=True)
 
-    st.dataframe(ocp_df)
-    st.markdown(get_table_download_link_to_excel(ocp_df), unsafe_allow_html=True)
+    c2.dataframe(ocp_df)
+    c2.markdown(get_table_download_link_to_excel(ocp_df), unsafe_allow_html=True)
 
 
     c2.markdown(get_table_download_link_to_csv(ocp_df), unsafe_allow_html=True)
 
-    st.write(ocpTT_df)
-    st.markdown(get_table_download_link_to_excel(ocpTT_df), unsafe_allow_html=True)
+    c2.write(ocpTT_df)
+    c2.markdown(get_table_download_link_to_excel(ocpTT_df), unsafe_allow_html=True)
 
 
     c2.markdown(get_table_download_link_to_csv(ocpTT_df), unsafe_allow_html=True)
