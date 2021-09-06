@@ -330,7 +330,7 @@ def main(file_path):
 
 
 
-st.title('RailML file viewer')
+st.sidebar.title('RailML file viewer')
 link = '[GitHub](http://github.com)'
 
 
