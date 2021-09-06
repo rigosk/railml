@@ -217,6 +217,7 @@ def get_trainParts(file_path):
                                             'processStatus','timetablePeriodRef',
                                             'categoryRef'])
 
+
 def get_ocpTT(file_path):
     st.write('getOCPTT')
     ocpTTs = []
@@ -379,6 +380,7 @@ if file_path is not None:
 
     c2.header('c2')
     c2.subheader('Operational Control Points')
+    c2.write(' operational or time measurement points of a railway network in the general sense (such as stations, stops, line changes, signals, etc.) required by the timetable of a train. <a href="https://wiki2.railml.org/wiki/IS:ocp">railml documentation</a>')
     c2.dataframe(ocp_df)
     c2.markdown(get_table_download_link_to_excel(ocp_df), unsafe_allow_html=True)
     c2.markdown(get_table_download_link_to_csv(ocp_df), unsafe_allow_html=True)
