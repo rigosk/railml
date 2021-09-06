@@ -374,6 +374,11 @@ if file_path is not None:
     st.write(list(root))
     st.write(root.findall(ns+"tracks"))
 
+    for _, elem in ET.iterparse(file_path, events=['start',], tag=[ns+'tracks'], remove_blank_text=True):
+        if elem.tag == ns+'tracks':
+            st.write("this is it!!!!!!!!!!!!!!!!!!!!!!")
+            break
+
 #    st.write(gc.get_stats())
 #    st.write(gc.get_objects())
     df=get_trainParts(file_path)
