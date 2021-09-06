@@ -105,7 +105,7 @@ def get_trains(file_path):
 
         elem.clear()
     elem.clear()
-    del elem
+    #del elem
     gc.collect()
 
     return pd.DataFrame(trainPartREFS,columns=['train-id', #1
