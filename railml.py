@@ -105,7 +105,8 @@ def get_trains(file_path):
 
         elem.clear()
     elem.clear()
-    #del elem
+    if elem:
+        del elem
     gc.collect()
 
     return pd.DataFrame(trainPartREFS,columns=['train-id', #1
@@ -142,7 +143,8 @@ def get_categories(file_path):
                           elem.get('categoryPriority')]) #8
         elem.clear()
     elem.clear()
-    del elem
+    if elem:
+        del elem
     return pd.DataFrame(categories,columns=['category-id', #1
                                             'category-code',#2
                                             'category-name',#3
@@ -170,7 +172,8 @@ def get_operating_periods(file_path):
                                  elem.get('bitMask')])  #9
         elem.clear()
     elem.clear()
-    del elem
+    if elem:
+        del elem
     return pd.DataFrame(operatingPeriods,columns=['operatingPeriod', #1
                                                   'operatingPeriod-code',#2
                                                   'operatingPeriod-name',#3
@@ -190,7 +193,8 @@ def get_ocps(file_path):
         ocps.append([elem.get('id'),elem.get('name')])
         elem.clear()
     #elem.clear()
-    del elem
+    if elem:
+        del elem
     return pd.DataFrame(ocps,columns=['ocpRef','station-name'])
 
 
@@ -205,7 +209,8 @@ def get_trainParts(file_path):
                       elem.get('timetablePeriodRef'),elem.get('categoryRef')])
         elem.clear()
     #elem.clear()
-    del elem
+    if elem:
+        del elem
     return pd.DataFrame(trainParts,columns=['trainPart-id','code','line','trainNumber',
                                             'processStatus','timetablePeriodRef',
                                             'categoryRef'])
@@ -267,7 +272,8 @@ def get_ocpTT(file_path):
         st.write(value,sys.getsizeof(value))
     st.write(dir())
     #elem.clear()
-    del elem
+    if elem:
+        del elem
     gc.collect()
     for value in dir():
         st.write(value,sys.getsizeof(value))
