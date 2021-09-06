@@ -202,7 +202,7 @@ def get_ocps(file_path):
     #elem.clear()
     if elem:
         del elem
-    return pd.DataFrame(ocps,columns=['ocpRef','id','station-name','description'])
+    return pd.DataFrame(ocps,columns=['ocpRef','code','station-name','description','lang','type'])
 
 
 def get_trainParts(file_path):
