@@ -375,11 +375,11 @@ if file_path is not None:
     c1.markdown(get_table_download_link_to_excel(df), unsafe_allow_html=True)
     c1.markdown(get_table_download_link_to_csv(df), unsafe_allow_html=True)
     c1.download_button(
-...     label="Press to Download",
-...     data=to_excel(df),
-...     file_name='large_df.csv',
-...     
-... )
+         label="Press to Download",
+        data=to_excel(df),
+         file_name='large_df.csv',
+
+         )
     c2.header('c2')
     c2.subheader('subheader 2')
     c2.dataframe(ocp_df)
