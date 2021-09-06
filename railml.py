@@ -14,6 +14,8 @@ st.set_page_config(
      layout="wide",
      initial_sidebar_state="expanded",
  )
+
+ # this removes "Made with Streamlit"
 hide_streamlit_style = """
 <style>
 #MainMenu {/*visibility: hidden;*/}
@@ -340,7 +342,7 @@ file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
 
 
 # Space out the maps so the first one is 2x the size of the other three
-c1, c2 = st.beta_columns((1, 4))
+c1, c2 = st.containers((1, 4))
 if file_path is not None:
 
     st.write(type(file_path))
