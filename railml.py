@@ -196,7 +196,7 @@ def get_ocps(file_path):
                     elem.get('code'),
                     elem.get('name'),
                     elem.get('description'),
-                    elem.get('xml:lang')
+                    elem.get('xml:lang'),
                     elem.get('type')])
         elem.clear()
     #elem.clear()
