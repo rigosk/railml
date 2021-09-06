@@ -377,6 +377,7 @@ if file_path is not None:
     for _, elem in ET.iterparse(file_path, events=['start',], tag=[ns+'tracks'], remove_blank_text=True):
         if elem.tag == ns+'tracks':
             st.write("this is it!!!!!!!!!!!!!!!!!!!!!!")
+            elem.clear()
             break
 
 #    st.write(gc.get_stats())
