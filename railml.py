@@ -369,10 +369,10 @@ if file_path is not None:
 
     st.write(type(file_path))
 
-
-    root = ET.Element("railml")
+    root = etree.XML(file_path)
+#    root = ET.Element("railml")
     st.write(list(root))
-    st.write(root.find(".//metadata"))
+    st.write(root.find("metadata"))
 
 #    st.write(gc.get_stats())
 #    st.write(gc.get_objects())
