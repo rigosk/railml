@@ -371,7 +371,7 @@ if file_path is not None:
 
     root = ET.parse(file_path)
 #    root = ET.Element("railml")
-    st.write(list(root))
+#    st.write(list(root))
     st.write(root.find(".//metadata").tag)
 
 #    st.write(gc.get_stats())
