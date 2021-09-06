@@ -372,7 +372,7 @@ if file_path is not None:
 
     root = ET.Element("railml")
     st.write(list(root))
-    st.write(root.find("ocp").tag)
+    st.write(root.find("ocp"))
 
 #    st.write(gc.get_stats())
 #    st.write(gc.get_objects())
