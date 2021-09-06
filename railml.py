@@ -342,7 +342,7 @@ file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
 if st.sidebar.button('Say hello'):
     try:
         with open('Ostsachsen_V220.railml',"rb") as input:
-            file_path=input.getvalue()
+            file_path=input.read()
     except FileNotFoundError:
         st.error('File not found.')
 
