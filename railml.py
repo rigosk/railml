@@ -339,8 +339,8 @@ if file_path is not None:
 
     st.write(type(file_path))
 
-    st.write(gc.get_stats())
-    st.write(gc.get_objects())
+#    st.write(gc.get_stats())
+#    st.write(gc.get_objects())
     df=get_trainParts(uploaded_file)
     uploaded_file.seek(0)
     gc.collect()
