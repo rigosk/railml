@@ -343,8 +343,8 @@ if st.sidebar.button('Say hello'):
     try:
 
         with open('Ostsachsen_V220.railml','rb') as input:
-            file_path2=input.read()
-            file_path=BytesIO(file_path2)
+            
+            file_path=BytesIO(input.read())
     except FileNotFoundError:
         st.error('File not found.')
 
