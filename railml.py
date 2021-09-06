@@ -382,6 +382,7 @@ if file_path is not None:
 
 #    st.write(gc.get_stats())
 #    st.write(gc.get_objects())
+    file_path.seek(0)
     df=get_trainParts(file_path)
     file_path.seek(0)
     ocp_df=get_ocps(file_path)
