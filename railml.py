@@ -343,8 +343,8 @@ if st.sidebar.button('Say hello'):
     try:
         with open('Ostsachsen_V220.railml') as input:
             file_path=input.read()
-        except FileNotFoundError:
-            st.error('File not found.')
+    except FileNotFoundError:
+        st.error('File not found.')
 
 # Space out the maps so the first one is 2x the size of the other three
 
