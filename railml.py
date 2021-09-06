@@ -351,10 +351,10 @@ if file_path is not None:
     file_path.seek(0)
     gc.collect()
     c2.write(df)
-    st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+    st.markdown(get_table_download_link_to_excel(df), unsafe_allow_html=True)
 
 
-    c2.markdown(get_table_download_link2(df), unsafe_allow_html=True)
+    c2.markdown(get_table_download_link_to_csv(df), unsafe_allow_html=True)
 
 
 placeholder = c1.empty()
