@@ -367,6 +367,8 @@ if file_path is not None:
     file_path.seek(0)
     ocpTT_df=get_ocpTT(file_path)
     file_path.seek(0)
+    operatingPeriods_df=get_ocpTT(file_path)
+    file_path.seek(0)
     gc.collect()
 
     c1.header('c1')
@@ -388,9 +390,9 @@ if file_path is not None:
 
 
     c2.subheader('Operating Periods')
-    c2.write(get_operating_periods)
-    c2.markdown(get_table_download_link_to_excel(get_operating_periods), unsafe_allow_html=True)
-    c2.markdown(get_table_download_link_to_csv(get_operating_periods), unsafe_allow_html=True)
+    c2.write(operatingPeriods_df)
+    c2.markdown(get_table_download_link_to_excel(operatingPeriods_df), unsafe_allow_html=True)
+    c2.markdown(get_table_download_link_to_csv(operatingPeriods_df), unsafe_allow_html=True)
 
 
 
