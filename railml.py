@@ -342,7 +342,10 @@ file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
 
 
 # Space out the maps so the first one is 2x the size of the other three
+st.header('c1')
+
 c1= st.container()
+st.header('c2')
 c2= st.container()
 if file_path is not None:
 
@@ -357,18 +360,17 @@ if file_path is not None:
     ocpTT_df=get_ocpTT(file_path)
     file_path.seek(0)
     gc.collect()
+    st.subheader('subheader 1')
     c2.write(df)
     c2.markdown(get_table_download_link_to_excel(df), unsafe_allow_html=True)
-
-
     c2.markdown(get_table_download_link_to_csv(df), unsafe_allow_html=True)
-
+    st.subheader('subheader 2')
     c2.dataframe(ocp_df)
     c2.markdown(get_table_download_link_to_excel(ocp_df), unsafe_allow_html=True)
 
 
     c2.markdown(get_table_download_link_to_csv(ocp_df), unsafe_allow_html=True)
-
+    st.subheader('subheader 3')
     c2.write(ocpTT_df)
     c2.markdown(get_table_download_link_to_excel(ocpTT_df), unsafe_allow_html=True)
 
