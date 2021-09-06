@@ -369,7 +369,7 @@ if file_path is not None:
 
     st.write(type(file_path))
 
-    root = etree.XML(file_path)
+    root = ET.XML(file_path)
 #    root = ET.Element("railml")
     st.write(list(root))
     st.write(root.find(".//metadata").tag)
