@@ -192,12 +192,15 @@ def get_ocps(file_path):
     for _, elem in ET.iterparse(file_path, events=['end',], tag=[ns+'ocp',ns+'operationControlPoints'], remove_blank_text=True):
         if elem.tag == ns+'operationControlPoints':
             break
-        ocps.append([elem.get('id'),elem.get('name')])
+        ocps.append([elem.get('id'),
+                    elem.get('code'),
+                    elem.get('name'),
+                    elem.get('description')])
         elem.clear()
     #elem.clear()
     if elem:
         del elem
-    return pd.DataFrame(ocps,columns=['ocpRef','station-name'])
+    return pd.DataFrame(ocps,columns=['ocpRef','id','station-name','description'])
 
 
 def get_trainParts(file_path):
