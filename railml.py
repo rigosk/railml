@@ -349,7 +349,7 @@ if file_path is not None:
 #    st.write(gc.get_objects())
     df=get_trainParts(file_path)
     file_path.seek(0)
-    ocp_df=get_ocps(fle_path)
+    ocp_df=get_ocps(file_path)
     file_path.seek(0)
     ocpTT_df=get_ocpTT(file_path)
     file_path.seek(0)
