@@ -10,7 +10,7 @@ import sys
 
 st.set_page_config(
      page_title="railML",
-     page_icon="./favicon.ico",
+     page_icon="./railway.png",
      layout="wide",
      initial_sidebar_state="expanded",
  )
