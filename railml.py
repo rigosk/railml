@@ -372,7 +372,7 @@ if file_path is not None:
     tree = ET.parse(file_path)
     root = tree.getroot()
     st.write(list(root))
-    st.write(root.find("metadata"))
+    st.write(root.find("tracks"))
 
 #    st.write(gc.get_stats())
 #    st.write(gc.get_objects())
