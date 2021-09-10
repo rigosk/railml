@@ -208,7 +208,7 @@ def get_speedChanges(file_path):
     #speedChanges
     st.write('getocps')
     speedChanges=[]
-    for _, elem in ET.iterparse(file_path, events=['end',], tag=[ns+'speedChange',ns+'speedChanges'], remove_blank_text=True):
+    for _, elem in ET.iterparse(file_path, events=['end',], tag=[ns+'speedChange',ns+'trackElements'], remove_blank_text=True):
         if elem.tag == ns+'speedChanges':
             break
         speedChanges.append([elem.get('id'),
