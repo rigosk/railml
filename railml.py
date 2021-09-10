@@ -204,6 +204,25 @@ def get_ocps(file_path):
         del elem
     return pd.DataFrame(ocps,columns=['ocpRef','code','station-name','description','lang','type'])
 
+def get_speedChanges(file_path):
+    #speedChanges
+    st.write('getocps')
+    ocps=[]
+    for _, elem in ET.iterparse(file_path, events=['end',], tag=[ns+'speedChange',ns+'speedChanges'], remove_blank_text=True):
+        if elem.tag == ns+'speedChanges':
+            break
+        speedChanges.append([elem.get('id'),
+                    elem.get('pos'),
+                    elem.get('absPos'),
+                    elem.get('dir'),
+                    elem.get('profileRef'),
+                    elem.get('vMax')])
+        elem.clear()
+    #elem.clear()
+    if elem:
+        del elem
+    return pd.DataFrame(speedChanges,columns=['id','pos','absPos','dir','profileRef','vMax'])
+
 
 def get_trainParts(file_path):
     st.write('trainParts')
@@ -389,6 +408,8 @@ if file_path is not None:
     file_path.seek(0)
     ocpTT_df=get_ocpTT(file_path)
     file_path.seek(0)
+    speedChanges_df=get_speedChanges(file_path)
+    file_path.seek(0)
     operatingPeriods_df=get_operating_periods(file_path)
     file_path.seek(0)
     gc.collect()
@@ -398,6 +419,12 @@ if file_path is not None:
     c1.write(df)
     c1.markdown(get_table_download_link_to_excel(df), unsafe_allow_html=True)
     c1.markdown(get_table_download_link_to_csv(df), unsafe_allow_html=True)
+
+
+    c1.subheader('speedChanges')
+    c1.write(speedChanges_df)
+    c1.markdown(get_table_download_link_to_excel(speedChanges_df), unsafe_allow_html=True)
+    c1.markdown(get_table_download_link_to_csv(speedChanges_df), unsafe_allow_html=True)
 
     c2.header('c2')
     c2.subheader('Operational Control Points')
