@@ -211,74 +211,76 @@ def get_ocps(file_path):
     return pd.DataFrame(ocps,columns=['ocpRef','code','station-name','description','lang','type'])
 
 def get_speedChanges(file_path):
-    tracks=[]
-    speed_changes=[]
-    gradient_Changes=[]
-    radius_Changes=[]
+
+    final_df=[]
     try:
-        for _, track_part in ET.iterparse(file_path, events=['end',], tag=[ns+'track'], remove_blank_text=True):
-            tracks.append([
-                     track_part.get('id'),
-                     track_part.get('code'),
-                     track_part.get('name'),
-                     track_part.get('type'),
-                     track_part.find('.//'+ns+"trackBegin").get('pos'),
-                     track_part.find('.//'+ns+"trackEnd").get('pos'),
-                     track_part.find('.//'+ns+"trackBegin").get('absPos'),
-                     track_part.find('.//'+ns+"trackEnd").get('absPos'),
-                    ])
-           # print('ok')
+        for _, track_part in ET.iterparse(file_path, events=['end',], tag=[ns+'track',ns+'tracks'], remove_blank_text=True):
+            speedChanges=[]
+            gradientChanges=[]
+            radiusChanges=[]
+            ref_track=[track_part.get('id'),
+                        track_part.get('code'),
+                        track_part.get('name'),
+                        track_part.get('type'),
+                        ]
+
+            if track_part.tag == ns+'tracks': #do not parse the rest of the file
+                track_part.clear()
+                break
 
             for speedChange in track_part.iter(ns+'speedChange'):
-              #  print('pp')
-                speed_changes.append([
-                        track_part.get('id'), #track_id
-                       # ref_track[1], #track_code
-                       # ref_track[2], #track_name
-                       # ref_track[3], #track_type
-                        speedChange.get('id'),
-                        speedChange.get('pos'),
-                        speedChange.get('absPos'),
-                        speedChange.get('dir'),
-                        speedChange.get('profileRef'),
-                        speedChange.get('vMax')])
+                speedChanges.append([
+                            ref_track[0], #track_id
+                            ref_track[1], #track_code
+                            ref_track[2], #track_name
+                            ref_track[3], #track_type
+                            speedChange.get('id'),
+                            speedChange.get('pos'),
+                            speedChange.get('absPos'),
+                            speedChange.get('dir'),
+                            speedChange.get('profileRef'),
+                            speedChange.get('vMax')])
                 speedChange.clear()
 
             for gradientChange in track_part.iter(ns+'gradientChange'):
-              #  print('pp')
-                gradient_Changes.append([
-                        track_part.get('id'), #track_id
-                       # ref_track[1], #track_code
-                       # ref_track[2], #track_name
-                       # ref_track[3], #track_type
-                        gradientChange.get('id'),
-                        gradientChange.get('pos'),
-                        gradientChange.get('absPos'),
-                        gradientChange.get('dir'),
-                        gradientChange.get('slope')])
+                gradientChanges.append([
+                            ref_track[0], #track_id
+                            ref_track[1], #track_code
+                            ref_track[2], #track_name
+                            ref_track[3], #track_type
+                            gradientChange.get('id'),
+                            gradientChange.get('pos'),
+                            gradientChange.get('absPos'),
+                            gradientChange.get('dir'),
+                            gradientChange.get('slope'),
+                            ])
                 gradientChange.clear()
 
             for radiusChange in track_part.iter(ns+'radiusChange'):
-              #  print('pp')
-                radius_Changes.append([
-                        track_part.get('id'), #track_id
-                       # ref_track[1], #track_code
-                       # ref_track[2], #track_name
-                       # ref_track[3], #track_type
-                        radiusChange.get('id'),
-                        radiusChange.get('pos'),
-                        radiusChange.get('absPos'),
-                        radiusChange.get('dir'),
-                        radiusChange.get('radius')])
+                radiusChanges.append([
+                            ref_track[0], #track_id
+                            ref_track[1], #track_code
+                            ref_track[2], #track_name
+                            ref_track[3], #track_type
+                            gradientChange.get('id'),
+                            gradientChange.get('pos'),
+                            gradientChange.get('absPos'),
+                            gradientChange.get('dir'),
+                            gradientChange.get('radius'),
+                            ])
                 radiusChange.clear()
-
+            speeds_df=pd.DataFrame(speedChanges,columns=['track_id','track_code','track_name','track_type','id','pos','absPos','dir','profileRef','vMax'])
+            gradients_df=pd.DataFrame(gradientChanges,columns=['track_id','track_code','track_name','track_type','id','pos','absPos','dir','slope'])
+            radius_df=pd.DataFrame(radiusChanges,columns=['track_id','track_code','track_name','track_type','id','pos','absPos','dir','radius'])
+            #left=pd.merge(speeds_df, gradients_df, on=['track_id','track_code','track_name','track_type','pos','absPos'])
+        #    st.dataframe(left)
+        #    track_info_df= pd.merge(left, radius_df, on=['pos','absPos'])
+            final_df.append(speeds_df)
     except:
-        print('exception')
- #   print(speed_changes)
-    return [pd.DataFrame(speed_changes,columns=['track_id','id_change','pos','absPos','dir','profileRef','vMax']) ,
-pd.DataFrame(gradient_Changes,columns=['track_id','id_change','pos','absPos','dir','slope']) ,
-pd.DataFrame(radius_Changes,columns=['track_id','id_change','pos','absPos','dir','radius']) ,
-pd.DataFrame(tracks,columns=['id','code','name','type','begpos','endpos','begabspos','endabspos'])]
+        st.error('An exception occured while reading speed changes.')
+
+    return pd.concat(final_df, ignore_index=True)
+    #return pd.concat([speeds_df, gradients_df,radius_df])
 
 
 def get_trainParts(file_path):
@@ -484,22 +486,49 @@ if file_path is not None:
 #    st.write(gc.get_stats())
 #    st.write(gc.get_objects())
     file_path.seek(0)
-
+    df=get_trainParts(file_path)
+    file_path.seek(0)
+    ocp_df=get_ocps(file_path)
+    file_path.seek(0)
+    ocpTT_df=get_ocpTT(file_path)
+    file_path.seek(0)
     speedChanges_df=get_speedChanges(file_path)
     file_path.seek(0)
-    
+    operatingPeriods_df=get_operating_periods(file_path)
+    file_path.seek(0)
     gc.collect()
 
+    c1.header('c1')
+    c1.subheader('Train Parts')
+    c1.write(df)
+    c1.markdown(get_table_download_link_to_excel(df), unsafe_allow_html=True)
+    c1.markdown(get_table_download_link_to_csv(df), unsafe_allow_html=True)
+    c1.download_button(label='Download excel', data=to_excel(df),file_name='file.xlsx')
 
 
 
-
-    c1.subheader('line-changes')
+    c1.subheader('speedChanges')
     c1.write(speedChanges_df)
     c1.markdown(get_table_download_link_to_excel(speedChanges_df), unsafe_allow_html=True)
     c1.markdown(get_table_download_link_to_csv(speedChanges_df), unsafe_allow_html=True)
 
+    c2.header('c2')
+    c2.subheader('Operational Control Points')
+    c2.write(' operational or time measurement points of a railway network in the general sense (such as stations, stops, line changes, signals, etc.) required by the timetable of a train. <a href="https://wiki2.railml.org/wiki/IS:ocp">railml documentation</a>')
+    c2.dataframe(ocp_df)
+    c2.markdown(get_table_download_link_to_excel(ocp_df), unsafe_allow_html=True)
+    c2.markdown(get_table_download_link_to_csv(ocp_df), unsafe_allow_html=True)
 
+    c2.subheader('Operational Control Points TT')
+    c2.write(ocpTT_df)
+    c2.markdown(get_table_download_link_to_excel(ocpTT_df), unsafe_allow_html=True)
+    c2.markdown(get_table_download_link_to_csv(ocpTT_df), unsafe_allow_html=True)
+
+
+    c2.subheader('Operating Periods')
+    c2.write(operatingPeriods_df)
+    c2.markdown(get_table_download_link_to_excel(operatingPeriods_df), unsafe_allow_html=True)
+    c2.markdown(get_table_download_link_to_csv(operatingPeriods_df), unsafe_allow_html=True)
 
 
 
