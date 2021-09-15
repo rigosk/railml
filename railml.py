@@ -477,11 +477,11 @@ if file_path is not None:
 
 
 
-    c1.subheader('line-changes')
-    c1.write(speedChanges_df[0])
-    c1.write(speedChanges_df[1])
-    c1.write(speedChanges_df[2])
-    c1.write(speedChanges_df[3])
+    st.subheader('line-changes')
+    st.write(speedChanges_df[0])
+    st.write(speedChanges_df[1])
+    st.write(speedChanges_df[2])
+    st.write(speedChanges_df[3])
     #c1.markdown(get_table_download_link_to_excel(speedChanges_df), unsafe_allow_html=True)
     #c1.markdown(get_table_download_link_to_csv(speedChanges_df), unsafe_allow_html=True)
 
