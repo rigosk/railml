@@ -453,8 +453,8 @@ list=['g','h']
 result=st.selectbox('bbababab',list)
 st.write(result)
 @st.cache()
-def main2():
-    if file_path is not None:
+def main2(file_path):
+
 
 
 
@@ -490,10 +490,12 @@ def main2():
 
 
 
-    if not file_path:
-        st.warning('Please upload a railml file.')
-        st.stop()
-main2()
+
+if file_path is not None:
+    main2(file_path)
+if not file_path:
+    st.warning('Please upload a railml file.')
+    st.stop()
 st.subheader('line-changes')
 st.write(speedChanges_df[0])
 st.write(speedChanges_df[1])
