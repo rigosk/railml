@@ -499,6 +499,3 @@ if file_path is not None:
 if not file_path:
     st.warning('Please upload a railml file.')
     st.stop()
-list=['g','h']
-result=st.selectbox('bbababab',list)
-st.write(result)
