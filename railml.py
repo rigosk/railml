@@ -451,11 +451,18 @@ c1= st.container()
 c2= st.container()
 if file_path is not None:
 
+    file_path.seek(0)
+
+    speedChanges_df=get_speedChanges(file_path)
+    file_path.seek(0)
+
+    gc.collect()
 
 
 
     Host_Country = st.selectbox('Select HomeTeamName name:',('France', 'Spain', 'Italy', 'England', 'Belgium', 'Portugal','Sweden'))
-    st.write('You selected:', Host_Country)
+    if Host_Country:
+        st.write('You selected:', Host_Country)
 
 
 
@@ -466,12 +473,6 @@ if file_path is not None:
 
 #    st.write(gc.get_stats())
 #    st.write(gc.get_objects())
-    file_path.seek(0)
-
-    speedChanges_df=get_speedChanges(file_path)
-    file_path.seek(0)
-
-    gc.collect()
 
 
 
