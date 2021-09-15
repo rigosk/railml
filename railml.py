@@ -449,9 +449,7 @@ c0=st.container()
 c1= st.container()
 
 c2= st.container()
-list=['g','h']
-result=st.selectbox('bbababab',list)
-st.write(result)
+
 @st.cache()
 def main2(file_path):
 
@@ -501,3 +499,6 @@ if file_path is not None:
 if not file_path:
     st.warning('Please upload a railml file.')
     st.stop()
+list=['g','h']
+result=st.selectbox('bbababab',list)
+st.write(result)
