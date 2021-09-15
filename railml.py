@@ -209,7 +209,8 @@ def get_ocps(file_path):
     #if elem  is not None:
     #    del elem
     return pd.DataFrame(ocps,columns=['ocpRef','code','station-name','description','lang','type'])
-
+    
+@st.cache
 def get_speedChanges(file_path):
     tracks=[]
     speed_changes=[]
@@ -453,7 +454,7 @@ if file_path is not None:
 
 
 
-    Host_Country = st.selectbox('Select HomeTeamName name:',('France', 'Spain', 'Italy', 'England', 'Belgium', 'Portugal','Sweden'))
+    Host_Country = st.selectbox('Select HomeTeamName name:',('France', 'Spain', 'Italy', 'England', 'Belgium', 'Portugal','Sweden'),on_change=)
     st.write('You selected:', Host_Country)
 
 
