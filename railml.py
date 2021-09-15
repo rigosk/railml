@@ -427,7 +427,7 @@ def main(file_path):
 
 
 
-
+@st.cache()
 file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
 st.sidebar.write('or use a railml sample file')
 if st.sidebar.button('Ostsachsen_V220'):
