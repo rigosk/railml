@@ -449,15 +449,16 @@ c0=st.container()
 c1= st.container()
 
 c2= st.container()
+list=['g','h']
+result=st.selectbox('bbababab',list)
+st.write(result)
 @st.cache()
 def main2():
     if file_path is not None:
 
 
 
-        list=['g','h']
-        result=st.selectbox('bbababab',list)
-        st.write(result)
+
 
         file_path.seek(0)
 
