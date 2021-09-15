@@ -427,7 +427,7 @@ def main(file_path):
 
 
 
-@st.cache()
+
 file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
 st.sidebar.write('or use a railml sample file')
 if st.sidebar.button('Ostsachsen_V220'):
@@ -449,48 +449,51 @@ c0=st.container()
 c1= st.container()
 
 c2= st.container()
-if file_path is not None:
+@st.cache()
+def main2():
+    if file_path is not None:
 
 
 
-    list=['g','h']
-    result=st.selectbox('bbababab',list)
-    st.write(result)
+        list=['g','h']
+        result=st.selectbox('bbababab',list)
+        st.write(result)
 
-    file_path.seek(0)
+        file_path.seek(0)
 
-    speedChanges_df=get_speedChanges(file_path)
-    file_path.seek(0)
+        speedChanges_df=get_speedChanges(file_path)
+        file_path.seek(0)
 
-    gc.collect()
-
-
-
-
-
-
-#
-
-#    st.write(gc.get_stats())
-#    st.write(gc.get_objects())
+        gc.collect()
 
 
 
 
 
-    st.subheader('line-changes')
-    st.write(speedChanges_df[0])
-    st.write(speedChanges_df[1])
-    st.write(speedChanges_df[2])
-    st.write(speedChanges_df[3])
-#c1.markdown(get_table_download_link_to_excel(speedChanges_df), unsafe_allow_html=True)
-#c1.markdown(get_table_download_link_to_csv(speedChanges_df), unsafe_allow_html=True)
-    st.stop()
+
+    #
+
+    #    st.write(gc.get_stats())
+    #    st.write(gc.get_objects())
 
 
 
 
 
-if not file_path:
-    st.warning('Please upload a railml file.')
-    st.stop()
+        st.subheader('line-changes')
+        st.write(speedChanges_df[0])
+        st.write(speedChanges_df[1])
+        st.write(speedChanges_df[2])
+        st.write(speedChanges_df[3])
+    #c1.markdown(get_table_download_link_to_excel(speedChanges_df), unsafe_allow_html=True)
+    #c1.markdown(get_table_download_link_to_csv(speedChanges_df), unsafe_allow_html=True)
+        st.stop()
+
+
+
+
+
+    if not file_path:
+        st.warning('Please upload a railml file.')
+        st.stop()
+main2()
