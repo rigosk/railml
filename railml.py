@@ -467,7 +467,7 @@ def main2():
 
         gc.collect()
 
-
+        return speedChanges_df
 
 
 
@@ -481,11 +481,7 @@ def main2():
 
 
 
-        st.subheader('line-changes')
-        st.write(speedChanges_df[0])
-        st.write(speedChanges_df[1])
-        st.write(speedChanges_df[2])
-        st.write(speedChanges_df[3])
+
     #c1.markdown(get_table_download_link_to_excel(speedChanges_df), unsafe_allow_html=True)
     #c1.markdown(get_table_download_link_to_csv(speedChanges_df), unsafe_allow_html=True)
         st.stop()
@@ -498,3 +494,8 @@ def main2():
         st.warning('Please upload a railml file.')
         st.stop()
 main2()
+st.subheader('line-changes')
+st.write(speedChanges_df[0])
+st.write(speedChanges_df[1])
+st.write(speedChanges_df[2])
+st.write(speedChanges_df[3])
