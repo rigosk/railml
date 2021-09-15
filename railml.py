@@ -455,11 +455,6 @@ if file_path is not None:
 
 
 
-    Host_Country = st.selectbox('Select HomeTeamName name:',('France', 'Spain', 'Italy', 'England', 'Belgium', 'Portugal','Sweden'))
-
-    if not Host_Country:
-        st.stop()
-    st.write('You selected:', Host_Country)
     file_path.seek(0)
 
     speedChanges_df=get_speedChanges(file_path)
