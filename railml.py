@@ -455,7 +455,7 @@ if file_path is not None:
 
     list=['g','h']
     result=st.selectbox('bbababab',list)
-    st.write(f 'asdfasdfasdf{result}')
+    st.write(result)
 
     file_path.seek(0)
 
