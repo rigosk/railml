@@ -425,23 +425,23 @@ def main(file_path):
 
 
 
-@st.cache
-def main2():
 
-    file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
-    st.sidebar.write('or use a railml sample file')
-    if st.sidebar.button('Ostsachsen_V220'):
-        try:
-            with open('samples/Ostsachsen_V220.railml','rb') as input:
-                file_path=BytesIO(input.read())
-        except FileNotFoundError:
-            st.error('File not found.')
-    if st.sidebar.button('railML_SimpleExample_v11_railML3-1_04'):
-        try:
-            with open('samples/railML_SimpleExample_v11_railML3-1_04.railml','rb') as input:
-                file_path=BytesIO(input.read())
-        except FileNotFoundError:
-            st.error('File not found.')
+
+
+file_path = st.sidebar.file_uploader("Choose a railML file", type=["railml"])
+st.sidebar.write('or use a railml sample file')
+if st.sidebar.button('Ostsachsen_V220'):
+    try:
+        with open('samples/Ostsachsen_V220.railml','rb') as input:
+            file_path=BytesIO(input.read())
+    except FileNotFoundError:
+        st.error('File not found.')
+if st.sidebar.button('railML_SimpleExample_v11_railML3-1_04'):
+    try:
+        with open('samples/railML_SimpleExample_v11_railML3-1_04.railml','rb') as input:
+            file_path=BytesIO(input.read())
+    except FileNotFoundError:
+        st.error('File not found.')
 
 # Space out the maps so the first one is 2x the size of the other three
 
@@ -449,7 +449,6 @@ c0=st.container()
 c1= st.container()
 
 c2= st.container()
-main2()
 if file_path is not None:
 
 
