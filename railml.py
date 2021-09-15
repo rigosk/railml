@@ -456,15 +456,16 @@ if file_path is not None:
 
 
     Host_Country = st.selectbox('Select HomeTeamName name:',('France', 'Spain', 'Italy', 'England', 'Belgium', 'Portugal','Sweden'))
-    st.stop()
-    if Host_Country=='Spain':
-        st.write('You selected:', Host_Country)
-        file_path.seek(0)
 
-        speedChanges_df=get_speedChanges(file_path)
-        file_path.seek(0)
+    if not Host_Country:
+        st.stop()
+    st.write('You selected:', Host_Country)
+    file_path.seek(0)
 
-        gc.collect()
+    speedChanges_df=get_speedChanges(file_path)
+    file_path.seek(0)
+
+    gc.collect()
 
 
 
@@ -480,14 +481,14 @@ if file_path is not None:
 
 
 
-        st.subheader('line-changes')
-        st.write(speedChanges_df[0])
-        st.write(speedChanges_df[1])
-        st.write(speedChanges_df[2])
-        st.write(speedChanges_df[3])
-    #c1.markdown(get_table_download_link_to_excel(speedChanges_df), unsafe_allow_html=True)
-    #c1.markdown(get_table_download_link_to_csv(speedChanges_df), unsafe_allow_html=True)
-        st.stop()
+    st.subheader('line-changes')
+    st.write(speedChanges_df[0])
+    st.write(speedChanges_df[1])
+    st.write(speedChanges_df[2])
+    st.write(speedChanges_df[3])
+#c1.markdown(get_table_download_link_to_excel(speedChanges_df), unsafe_allow_html=True)
+#c1.markdown(get_table_download_link_to_csv(speedChanges_df), unsafe_allow_html=True)
+    st.stop()
 
 
 
