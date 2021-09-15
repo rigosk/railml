@@ -492,7 +492,7 @@ def main2(file_path):
 
 
 if file_path is not None:
-    main2(file_path)
+    speedChanges_df=main2(file_path)
     st.subheader('line-changes')
     st.write(speedChanges_df[0])
     st.write(speedChanges_df[1])
