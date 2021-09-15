@@ -491,10 +491,13 @@ def main2(file_path):
 
 if file_path is not None:
     speedChanges_df=main2(file_path)
-    st.subheader('line-changes')
+    st.subheader('speed-changes')
     st.write(speedChanges_df[0])
+    st.subheader('slope-changes')
     st.write(speedChanges_df[1])
+    st.subheader('radius-changes')
     st.write(speedChanges_df[2])
+    st.subheader('track-parts')
     st.write(speedChanges_df[3])
 if not file_path:
     st.warning('Please upload a railml file.')
