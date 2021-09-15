@@ -211,8 +211,7 @@ def get_ocps(file_path):
     #    del elem
     return pd.DataFrame(ocps,columns=['ocpRef','code','station-name','description','lang','type'])
 
-@st.cache(hash_funcs={StringIO: StringIO.getvalue}, suppress_st_warning=True)
-
+@st.cache
 def get_speedChanges(file_path):
     tracks=[]
     speed_changes=[]
