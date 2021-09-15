@@ -461,6 +461,7 @@ if file_path is not None:
 
 
     Host_Country = st.selectbox('Select HomeTeamName name:',('France', 'Spain', 'Italy', 'England', 'Belgium', 'Portugal','Sweden'))
+    st.stop()
     if Host_Country:
         st.write('You selected:', Host_Country)
 
