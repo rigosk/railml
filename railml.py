@@ -450,36 +450,17 @@ c1= st.container()
 c2= st.container()
 if file_path is not None:
 
-    st.write(type(file_path))
 
-    tree = ET.parse(file_path)
-    root = tree.getroot()
-    st.write((root))
-    st.write(list(root))
-    find=ET.XPath('.//tracks', namespaces= namespaces)
-    if find(root):
-        c0.write('69')
-    c0.write(find(root))
 
-    for child in root:
 
-        c0.write('12')
-        c0.write(child.tag)
 
-    c0.write('here starts')
-    c0.write(len(root.findall(ns+"infrastructure")))
 
-    c0.write('here ends')
 
-#    st.write(ET.QName(tree.find(ns+"infrastructure").tag).localname)
-    if tree.find(ns+'tracks') is not None:
-        c0.write("it has infrastructure 321")
 
-    for _, elem in ET.iterparse(file_path, events=['start',], tag=[ns+'tracks'], remove_blank_text=True):
-        if elem.tag == ns+'tracks':
-            c0.write("this is it!!!!!!!!!!!!!!!!!!!!!!")
-            elem.clear()
-            break
+
+
+
+#   
 
 #    st.write(gc.get_stats())
 #    st.write(gc.get_objects())
