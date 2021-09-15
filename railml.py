@@ -487,7 +487,7 @@ if file_path is not None:
         st.write(speedChanges_df[3])
     #c1.markdown(get_table_download_link_to_excel(speedChanges_df), unsafe_allow_html=True)
     #c1.markdown(get_table_download_link_to_csv(speedChanges_df), unsafe_allow_html=True)
-
+        st.stop()
 
 
 
